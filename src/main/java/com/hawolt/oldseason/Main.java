@@ -32,11 +32,6 @@ import java.util.stream.Collectors;
 
 public class Main {
     public static CheckboxMenuItem automatic = new CheckboxMenuItem("Browse CS automatically");
-    private static final List<String> legacy = new ArrayList<String>() {{
-        add("eun1");
-        add("tr");
-        add("ru");
-    }};
 
     private static final List<ServerSocket> proxies = new ArrayList<>();
     private static final Map<Integer, String> map = new HashMap<>();
@@ -137,8 +132,7 @@ public class Main {
             int firstIndex = relay.indexOf(".");
             int secondIndex = relay.indexOf(".", firstIndex + 1);
             String region = relay.substring(firstIndex + 1, secondIndex);
-            if (!legacy.contains(region)) relay = String.format("feapp.%s.lol.pvp.net", region);
-            else relay = String.format("prod.%s.lol.riotgames.com", region);
+            relay = String.format("feapp.%s.lol.pvp.net", region);
             host.replace(indexOfHost, host.length(), "127.0.0.1");
             lines.set(i + 1, host.toString());
             StringBuilder port = new StringBuilder(lines.get(i + 2));
