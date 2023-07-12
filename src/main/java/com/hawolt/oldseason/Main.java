@@ -41,7 +41,6 @@ public class Main {
     private static final Map<Integer, String> map = new HashMap<>();
 
     public static void main(String[] args) {
-        Logger.debug("Custom friend build");
         Logger.debug("Started oldseason at {}", new Date());
         try {
             for (String pid : TaskManager.retrieve("javaw", "Oldseason")) {
