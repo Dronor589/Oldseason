@@ -15,11 +15,15 @@ import java.util.List;
 
 public class TaskManager {
 
-    public static List<String> retrieve() throws IOException {
+    public static List<String> retrieve(String process) throws IOException {
+        return retrieve(process, null);
+    }
+
+    public static List<String> retrieve(String process, String additional) throws IOException {
         String self = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
         List<String> list = new ArrayList<>();
         for (String line : WMIC.wmic().split(System.lineSeparator())) {
-            if (!line.startsWith("javaw") || !line.contains("Oldseason")) continue;
+            if (!line.startsWith(process) || (additional != null && !line.contains(additional))) continue;
             String pid = line.substring(line.lastIndexOf("\"") + 1).trim();
             if (pid.equals(self)) continue;
             list.add(pid);
