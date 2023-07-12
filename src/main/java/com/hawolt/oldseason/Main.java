@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
 public class Main {
     public static CheckboxMenuItem automatic = new CheckboxMenuItem("Browse CS automatically");
     private static final List<String> legacy = new ArrayList<String>() {{
-        add("eun1");
         add("tr");
         add("ru");
     }};
@@ -42,10 +41,15 @@ public class Main {
     private static final Map<Integer, String> map = new HashMap<>();
 
     public static void main(String[] args) {
+        Logger.debug("Custom friend build");
         Logger.debug("Started oldseason at {}", new Date());
         try {
-            for (String pid : TaskManager.retrieve()) {
+            for (String pid : TaskManager.retrieve("javaw", "Oldseason")) {
                 Logger.debug("Found another running Oldseason instance, killing {}", pid);
+                TaskManager.kill(pid);
+            }
+            for (String pid : TaskManager.retrieve("RiotClientServices")) {
+                Logger.debug("Found an existing RiotClientService instance, killing {}", pid);
                 TaskManager.kill(pid);
             }
         } catch (IOException e) {
