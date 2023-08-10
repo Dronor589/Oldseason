@@ -14,9 +14,9 @@ software requirements
 
 Simply rightclick the icon in your taskbar and select "Start Oldseason Client" and you are good to go
 
-### Discord
+## Discord
 
-Join the Riotphobia [discord](https://discord.gg/JRDwxFxW7m)
+since this code lacks documentation the best help you can get is my knowledge, proper questions can be asked in this [discord](https://discord.gg/3wknX5gxaW) server, please note that I will not guide you to achieve something or answer beginner level questions
 
 ### Download
 
