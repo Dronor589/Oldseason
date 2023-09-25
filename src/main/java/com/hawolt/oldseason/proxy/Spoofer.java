@@ -39,26 +39,6 @@ public class Spoofer implements ByteSink {
         }
     }
 
-    private byte[] adjust(byte[] header) {
-        header[3] = (byte) ((buffer.length & 0xFF0000) >> 16);
-        header[4] = (byte) ((buffer.length & 0x00FF00) >> 8);
-        header[5] = (byte) ((buffer.length & 0x0000FF));
-        return header;
-    }
-
-    public byte[] getBuffer() {
-        return buffer;
-    }
-
-    @Override
-    public void drain(OutputStream outputStream) throws IOException {
-        for (byte[] bytes : list) {
-            outputStream.write(initial);
-            outputStream.write(headers);
-            outputStream.write(bytes);
-        }
-    }
-
     private static byte[] spoof(byte[] b) {
         try {
             byte[] compressedPayload = new byte[]{0, 17, 99, 111, 109, 112, 114, 101, 115, 115, 101, 100, 80, 97, 121, 108, 111, 97, 100, 1, 1};
@@ -111,6 +91,26 @@ public class Spoofer implements ByteSink {
             return adjusted;
         } catch (Exception e) {
             return b;
+        }
+    }
+
+    private byte[] adjust(byte[] header) {
+        header[3] = (byte) ((buffer.length & 0xFF0000) >> 16);
+        header[4] = (byte) ((buffer.length & 0x00FF00) >> 8);
+        header[5] = (byte) ((buffer.length & 0x0000FF));
+        return header;
+    }
+
+    public byte[] getBuffer() {
+        return buffer;
+    }
+
+    @Override
+    public void drain(OutputStream outputStream) throws IOException {
+        for (byte[] bytes : list) {
+            outputStream.write(initial);
+            outputStream.write(headers);
+            outputStream.write(bytes);
         }
     }
 }

@@ -6,9 +6,10 @@ package com.hawolt.oldseason.local;
  **/
 
 public class LeagueClient {
-    private final String riotAuth, leagueAuth, riotPort, leaguePort;
+    private final String line, riotAuth, leagueAuth, riotPort, leaguePort;
 
-    public LeagueClient(String riotAuth, String riotPort, String leagueAuth, String leaguePort) {
+    public LeagueClient(String line, String riotAuth, String riotPort, String leagueAuth, String leaguePort) {
+        this.line = line;
         this.riotAuth = riotAuth;
         this.riotPort = riotPort;
         this.leagueAuth = leagueAuth;
@@ -29,6 +30,10 @@ public class LeagueClient {
 
     public String getLeaguePort() {
         return leaguePort;
+    }
+
+    public String getLine() {
+        return line;
     }
 
     @Override
