@@ -31,14 +31,13 @@ import java.util.stream.Collectors;
  **/
 
 public class Main {
-    public static CheckboxMenuItem automatic = new CheckboxMenuItem("Browse CS automatically");
     private static final List<String> legacy = new ArrayList<String>() {{
         add("tr");
         add("ru");
     }};
-
     private static final List<ServerSocket> proxies = new ArrayList<>();
     private static final Map<Integer, String> map = new HashMap<>();
+    public static CheckboxMenuItem automatic = new CheckboxMenuItem("Browse CS automatically");
 
     public static void main(String[] args) {
         Logger.debug("Started oldseason at {}", new Date());
@@ -84,7 +83,8 @@ public class Main {
             Main.automatic.setEnabled(false);
             Application.popup.add(automatic);
             Application.popup.add(new ProviderPopupMenu());
-            Application.addMenuEntry("Github", () -> Browser.browse("https://github.com/Riotphobia/Oldseason"));
+            Application.addMenuEntry("Github", () -> Browser.browse("https://github.com/hawolt/Oldseason"));
+            Application.addMenuEntry("Discord", () -> Browser.browse("https://discord.gg/tN6wp9jkZA"));
             Application.addMenuEntry("Twitter", () -> Browser.browse("https://twitter.com/hawolt"));
             for (Map.Entry<Integer, String> entry : map.entrySet()) {
                 Logger.debug("setting up proxy on port {} for {}", entry.getKey(), entry.getValue());
