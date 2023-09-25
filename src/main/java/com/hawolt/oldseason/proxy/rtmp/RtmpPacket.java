@@ -16,20 +16,8 @@ public class RtmpPacket {
         this.initialHeader = initialHeader;
     }
 
-    public void setMessageType(int messageType) {
-        this.messageType = messageType;
-    }
-
-    public void setHeaderSize(int headerSize) {
-        this.header = new byte[this.headerSize = headerSize];
-    }
-
     public void addToHeader(byte b) {
         this.header[headerPosition++] = b;
-    }
-
-    public void setBodySize(int bodySize) {
-        this.body = new byte[this.bodySize = bodySize];
     }
 
     public void addToBody(byte b) {
@@ -44,6 +32,10 @@ public class RtmpPacket {
         return messageType;
     }
 
+    public void setMessageType(int messageType) {
+        this.messageType = messageType;
+    }
+
     public int getHeaderPosition() {
         return headerPosition;
     }
@@ -52,12 +44,20 @@ public class RtmpPacket {
         return headerSize;
     }
 
+    public void setHeaderSize(int headerSize) {
+        this.header = new byte[this.headerSize = headerSize];
+    }
+
     public int getBodyPosition() {
         return bodyPosition;
     }
 
     public int getBodySize() {
         return bodySize;
+    }
+
+    public void setBodySize(int bodySize) {
+        this.body = new byte[this.bodySize = bodySize];
     }
 
     public byte[] getHeader() {

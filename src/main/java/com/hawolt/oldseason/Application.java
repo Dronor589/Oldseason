@@ -23,11 +23,9 @@ public class Application {
 
     public static final ScheduledExecutorService service = Executors.newScheduledThreadPool(4);
     public static final List<MenuItem> list = new ArrayList<>();
-
-    private static SystemTray tray;
     public static PopupMenu popup;
-
     public static TrayIcon icon;
+    private static SystemTray tray;
 
     private static BufferedImage loadIcon() throws IOException {
         return ImageIO.read(new ByteArrayInputStream(Core.read(RunLevel.get("oldseason.png")).toByteArray()));

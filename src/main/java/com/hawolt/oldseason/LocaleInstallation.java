@@ -53,8 +53,9 @@ public class LocaleInstallation {
         JSONObject clients = object.getJSONObject("associated_client");
         List<String> list = new ArrayList<>();
         for (String key : clients.keySet()) {
-            if (key.contains("PBE") || key.contains("VALORANT") || key.contains("LoR") || !clients.get(key).equals(live))
+            if (key.contains("PBE") || key.contains("VALORANT") || key.contains("LoR") || !clients.get(key).equals(live)) {
                 continue;
+            }
             list.add(key);
         }
         return list.stream().map(File::new)
@@ -82,16 +83,5 @@ public class LocaleInstallation {
             return fileChooser.getSelectedFile();
         }
         return null;
-    }
-
-    private static List<String> load(List<String> list, JSONObject object) {
-        for (String key : object.keySet()) {
-            if (object.get(key) instanceof JSONObject) {
-                load(list, object.getJSONObject(key));
-            } else {
-                list.add(object.getString(key));
-            }
-        }
-        return list;
     }
 }

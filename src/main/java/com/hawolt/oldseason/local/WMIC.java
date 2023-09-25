@@ -27,12 +27,21 @@ public class WMIC {
     }
 
     public static List<LeagueClient> retrieve() throws IOException {
+        List<String> processes = retrieve("LeagueClientUx.exe");
         List<LeagueClient> list = new ArrayList<>();
-        for (String line : wmic().split(System.lineSeparator())) {
-            if (!line.startsWith("LeagueClientUx.exe")) continue;
+        for (String line : processes) {
             Matcher matcher = pattern.matcher(line);
             if (matcher.find())
-                list.add(new LeagueClient(matcher.group(1), matcher.group(3), matcher.group(5), matcher.group(7)));
+                list.add(new LeagueClient(line, matcher.group(1), matcher.group(3), matcher.group(5), matcher.group(7)));
+        }
+        return list;
+    }
+
+    public static List<String> retrieve(String executable) throws IOException {
+        List<String> list = new ArrayList<>();
+        for (String line : wmic().split(System.lineSeparator())) {
+            if (!line.startsWith(executable)) continue;
+            list.add(line);
         }
         return list;
     }

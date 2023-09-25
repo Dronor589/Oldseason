@@ -31,16 +31,19 @@ import java.util.stream.Collectors;
  **/
 
 public class Main {
-    public static CheckboxMenuItem automatic = new CheckboxMenuItem("Browse CS automatically");
-
     private static final List<ServerSocket> proxies = new ArrayList<>();
     private static final Map<Integer, String> map = new HashMap<>();
+    public static CheckboxMenuItem automatic = new CheckboxMenuItem("Browse CS automatically");
 
     public static void main(String[] args) {
         Logger.debug("Started oldseason at {}", new Date());
         try {
-            for (String pid : TaskManager.retrieve()) {
+            for (String pid : TaskManager.retrieve("javaw", "Oldseason")) {
                 Logger.debug("Found another running Oldseason instance, killing {}", pid);
+                TaskManager.kill(pid);
+            }
+            for (String pid : TaskManager.retrieve("RiotClientServices")) {
+                Logger.debug("Found an existing RiotClientService instance, killing {}", pid);
                 TaskManager.kill(pid);
             }
         } catch (IOException e) {
@@ -76,7 +79,8 @@ public class Main {
             Main.automatic.setEnabled(false);
             Application.popup.add(automatic);
             Application.popup.add(new ProviderPopupMenu());
-            Application.addMenuEntry("Github", () -> Browser.browse("https://github.com/Riotphobia/Oldseason"));
+            Application.addMenuEntry("Github", () -> Browser.browse("https://github.com/hawolt/Oldseason"));
+            Application.addMenuEntry("Discord", () -> Browser.browse("https://discord.gg/tN6wp9jkZA"));
             Application.addMenuEntry("Twitter", () -> Browser.browse("https://twitter.com/hawolt"));
             for (Map.Entry<Integer, String> entry : map.entrySet()) {
                 Logger.debug("setting up proxy on port {} for {}", entry.getKey(), entry.getValue());
@@ -128,11 +132,7 @@ public class Main {
             if (!line.trim().equals("lcds:")) continue;
             StringBuilder host = new StringBuilder(lines.get(i + 1));
             int indexOfHost = host.indexOf(":") + 2;
-            String relay = host.substring(indexOfHost, host.length());
-            int firstIndex = relay.indexOf(".");
-            int secondIndex = relay.indexOf(".", firstIndex + 1);
-            String region = relay.substring(firstIndex + 1, secondIndex);
-            relay = String.format("feapp.%s.lol.pvp.net", region);
+            String relay = lines.get(i + 1).split("lcds_host:")[1].trim();
             host.replace(indexOfHost, host.length(), "127.0.0.1");
             lines.set(i + 1, host.toString());
             StringBuilder port = new StringBuilder(lines.get(i + 2));

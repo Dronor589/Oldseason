@@ -10,7 +10,8 @@ public enum Provider {
     UGG("https://u.gg/multisearch?region=%s&summoners=%s", true, false),
     POROFESSOR("https://porofessor.gg/pregame/%s/%s", false, false),
     PORO("https://poro.gg/multi?region=%s&q=%s", false, true);
-    //https://u.gg/multisearch?region=euw1&summoners=hawolt v4,hawolt v2
+    private static final Provider[] PROVIDERS = Provider.values();
+
     private final String base;
     private final boolean platform, uppercase;
 
@@ -20,17 +21,15 @@ public enum Provider {
         this.base = base;
     }
 
-    public String format(Namespace locale, String query) {
-        String region = platform ? locale.getPlatformId() : locale.getCompetitiveRegion();
-        return String.format(base, !uppercase ? region.toLowerCase() : region.toUpperCase(), query);
-    }
-
-    private static final Provider[] PROVIDERS = Provider.values();
-
     public static Provider find(String name) {
         for (Provider provider : PROVIDERS) {
             if (provider.name().equalsIgnoreCase(name)) return provider;
         }
         return null;
+    }
+
+    public String format(Namespace locale, String query) {
+        String region = platform ? locale.getPlatformId() : locale.getCompetitiveRegion();
+        return String.format(base, !uppercase ? region.toLowerCase() : region.toUpperCase(), query);
     }
 }

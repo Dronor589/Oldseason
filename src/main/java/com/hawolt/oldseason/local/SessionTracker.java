@@ -23,12 +23,12 @@ import java.util.concurrent.TimeUnit;
  **/
 
 public class SessionTracker implements Runnable {
+    public static final Map<Long, ClientAssociation> cache = new HashMap<>();
+    private static final List<Long> games = new ArrayList<>();
+
     public static void launch() {
         Executors.newSingleThreadScheduledExecutor().scheduleWithFixedDelay(new SessionTracker(), 0, 5, TimeUnit.SECONDS);
     }
-
-    public static final Map<Long, ClientAssociation> cache = new HashMap<>();
-    private static final List<Long> games = new ArrayList<>();
 
     public static void check(long gameId, long summonerId) {
         Logger.debug("Assert summoner {} is us for gameId {}", summonerId, gameId);
